@@ -2011,6 +2011,7 @@ void Screen::setScreensaverFrames(FrameCallback einkScreensaver)
 
     // If: one-off screensaver frame passed as argument. Handles doDeepSleep()
     if (einkScreensaver != NULL) {
+        LOG_DEBUG("einkScreensaver = %d\n", einkScreensaver);
         screensaverFrame = einkScreensaver;
         ui->setFrames(&screensaverFrame, 1);
     }

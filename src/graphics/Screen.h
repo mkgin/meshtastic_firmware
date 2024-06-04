@@ -151,6 +151,7 @@ class Screen : public concurrency::OSThread
     /// Turns the screen on/off. Optionally, pass a custom screensaver frame for E-Ink
     void setOn(bool on, FrameCallback einkScreensaver = NULL)
     {
+        LOG_DEBUG("setOn on = %B\n", on );
         if (!on)
             // We handle off commands immediately, because they might be called because the CPU is shutting down
             handleSetOn(false, einkScreensaver);
