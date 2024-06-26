@@ -556,6 +556,7 @@ void MQTT::perhapsReportToMap()
     if (millis() - last_report_to_map < map_publish_interval_msecs) {
         return;
     } else {
+        // More should be checked  ( no fix / DOP )
         if (map_position_precision == 0 || (localPosition.latitude_i == 0 && localPosition.longitude_i == 0)) {
             last_report_to_map = millis();
             if (map_position_precision == 0)
@@ -564,6 +565,11 @@ void MQTT::perhapsReportToMap()
                 LOG_WARN("MQTT Map reporting is enabled, but no position available.\n");
             return;
         }
+	LOG_DEBUG("localPosition.latitude_i, %d  longitude_i: %d altitude: %d\n", localPosition.latitude_i, localPosition.longitude_i, localPosition.altitude);
+	LOG_DEBUG("localPosition.PDOP: %u, HDOP: %u, VDOP: %u\n", localPosition.PDOP, localPosition.HDOP, localPosition.VDOP);
+	LOG_DEBUG("localPosition.fix_quality: %u, fix_type: %u, sats_in_view: %u\n", localPosition.fix_quality, localPosition.fix_type, localPosition.sats_in_view);
+	LOG_DEBUG("localPosition.time: %u, timestamp: %u\n", localPosition.time, localPosition.timestamp);
+        //	LOG_DEBUG("localPosition.: %u, : %u, : %u\n", localPosition., localPosition., localPosition.);
 
         // Allocate ServiceEnvelope and fill it
         meshtastic_ServiceEnvelope *se = mqttPool.allocZeroed();
